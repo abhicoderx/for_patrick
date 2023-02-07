@@ -1,0 +1,17 @@
+{
+    "data": {
+        "request": [
+            {
+                "type": "City",
+                "query": "New Delhi,IN"
+            }
+        ],
+        "time_zone": [
+            {
+                "localtime": "2023-02-07 12:50",
+                "utcOffset": "5.50",
+                "zone": "Asia/Kolkata"
+            }
+        ]
+    }
+}

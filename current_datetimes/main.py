@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import functions_framework
 import requests
 import os
@@ -10,8 +12,8 @@ def current_datetimes(request):
    # The HTTP Request
    request_args = request.args
    # Parse tje query params
-   city1 = request_args.get("city1", default=None, type=str)
-   city2 = request_args.get("city2", default=None, type=str)
+   city1 = request_args.get("city1")
+   city2 = request_args.get("city2")
    # Error if not both cities passed
    if not city1 or not city2:
       return json.dumps({"error":"Can't process, city1 and city2 are required parameters"}), 400, {'Content-Type': 'application/json'}
@@ -51,3 +53,28 @@ def send_weather_request(weather_url,weather_key, city):
       localtime = zeroeth["localtime"]
       return localtime
 
+"""This method will be used by the mock to replace requests.get
+  """
+def mocked_weather_request_get(*args, **kwargs):
+  class MockResponse:
+      def __init__(self, json_data, status_code):
+          self.json_data = json_data
+          self.status_code = status_code
+
+      def json(self):
+          return self.json_data
+  if 'Chicago' in args[0] :
+      path = Path(__file__) / "../tests/test_files/chicago.json"
+      with path.open() as f:
+          data = json.load(f)
+      return MockResponse(data, 200)
+  elif 'New Delhi' in args[0]:
+      path = Path(__file__) / "../tests/test_files/new_delhi.json"
+      with path.open() as f:
+          data = json.load(f)
+      return MockResponse(data, 200)
+  else:
+      path = Path(__file__) / "../tests/test_files/error.json"
+      with path.open() as f:
+          data = json.load(f)
+      return MockResponse(data, 200)

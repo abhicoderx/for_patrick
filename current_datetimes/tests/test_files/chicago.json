@@ -1,0 +1,17 @@
+{
+    "data": {
+        "request": [
+            {
+                "type": "City",
+                "query": "Chicago,IL"
+            }
+        ],
+        "time_zone": [
+            {
+                "localtime": "2023-02-07 01:19",
+                "utcOffset": "-6.0",
+                "zone": "America/Chicago"
+            }
+        ]
+    }
+}
